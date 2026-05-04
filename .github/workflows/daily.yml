@@ -1,0 +1,46 @@
+name: Daily Server Wakeup
+
+# 기본값: UTC 00:00 = KST 09:00
+# 자기 시간대에 맞게 UTC cron 수정
+# (https://crontab.guru 에서 cron 식 확인 가능)
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:  # Actions 탭에서 수동 실행 가능
+
+jobs:
+  wakeup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install requests
+        run: pip install --quiet requests
+
+      - name: Run wakeup script
+        env:
+          # 필수 (5개)
+          SUPABASE_URL:         ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          SUPABASE_USER_ID:     ${{ secrets.SUPABASE_USER_ID }}
+          NOTION_TOKEN:         ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE_ID:   ${{ secrets.NOTION_DATABASE_ID }}
+          WAKE_URL:             ${{ secrets.WAKE_URL }}
+
+          # 선택 (default 값과 다르면 등록)
+          # SUPABASE_TABLE:           ${{ secrets.SUPABASE_TABLE }}            # default: chat_messages
+          # SUPABASE_PROFILE_TABLE:   ${{ secrets.SUPABASE_PROFILE_TABLE }}    # default: profiles
+          # SUPABASE_PROFILE_NAME_COL:${{ secrets.SUPABASE_PROFILE_NAME_COL }} # default: nickname
+          # SUPABASE_SENDER_COL:      ${{ secrets.SUPABASE_SENDER_COL }}       # default: sender_name
+          # SUPABASE_CONTENT_COL:     ${{ secrets.SUPABASE_CONTENT_COL }}      # default: content
+          # SUPABASE_USER_COL:        ${{ secrets.SUPABASE_USER_COL }}         # default: user_id
+          # TZ_OFFSET_HOURS:          ${{ secrets.TZ_OFFSET_HOURS }}           # default: 9 (KST)
+          # WAKE_TIMEOUT:             ${{ secrets.WAKE_TIMEOUT }}              # default: 150
+        run: python wakeup.py
