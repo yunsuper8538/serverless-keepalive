@@ -1,17 +1,20 @@
 name: Daily Server Wakeup
 
-# 기본값: UTC 00:00 = KST 09:00
-# 자기 시간대에 맞게 UTC cron 수정
-# (https://crontab.guru 에서 cron 식 확인 가능)
+# 기본값: UTC 00:07 = KST 09:07
+# - 정시(00분)는 GitHub Actions cron이 부하로 skip되는 경우가 있어서 7분 오프셋 사용
+# - 자기 시간대에 맞게 UTC cron 수정 (https://crontab.guru 참고)
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "7 0 * * *"
   workflow_dispatch:  # Actions 탭에서 수동 실행 가능
 
 jobs:
   wakeup:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    env:
+      # Node.js 20 deprecated → Node 24로 강제 (2026-06-02 자동 마이그 대비)
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
