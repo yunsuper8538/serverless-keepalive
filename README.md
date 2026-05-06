@@ -131,7 +131,7 @@ cron-job.org가 GitHub Actions를 트리거하려면 토큰이 필요.
 1. https://github.com/settings/tokens → **Fine-grained tokens** → **Generate new token**
 2. 입력:
    - **Token name**: `cron-job-org-trigger`
-   - **Expiration**: 1 year (또는 필요한 기간)
+   - **Expiration**: 1 year 또는 무제한 (또는 필요한 기간)
    - **Repository access**: **Only select repositories** → 이 repo 선택
    - **Permissions** → Repository permissions → **Add permissions** → `Actions` → **Read and write**
 3. **Generate token** → `github_pat_xxxx...` 형식 토큰을 한 번만 표시함. **메모장에 보관.** (다시 못 봄)
@@ -240,11 +240,7 @@ sender_name = "automation-bot"
 - 부모 페이지에 integration 연결해도 자식 DB에 자동 적용 안 되는 경우 있음
 - **해결**: DB 페이지에 직접 connection 추가.
 
-### 5. cron-job.org URL 끝에 인접 단어 묻음
-- README나 문서에서 URL 복사 시 다음 단어("Schedule" 등)가 같이 들어가면 404
-- **해결**: 정확히 `dispatches`로 끝나는지 더블체크.
-
-### 6. Node.js 20 deprecation (2026-06-02부터)
+### 5. Node.js 20 deprecation (2026-06-02부터)
 - 이미 daily.yml에 `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"` env 추가해뒀음
 - 자동으로 Node 24 사용 → 호환성 미리 확인됨
 
