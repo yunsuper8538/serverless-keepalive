@@ -221,8 +221,6 @@ sender_name = "automation-bot"
 
 ## 🚧 트러블슈팅 노트 — 미리 알아두면 좋은 함정
 
-이 템플릿은 4일간 직접 운영하면서 마주친 함정들을 정리한 결과물:
-
 ### 1. GitHub Actions schedule cron의 신뢰성 문제 (가장 큰 함정)
 - 알려진 이슈: **private repo + 활동 적은 repo에서 30~50% cron skip**
 - GitHub 공식 문서에도 "scheduled workflows may be delayed during periods of high loads. High load times include the start of every hour"라고 명시
