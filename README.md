@@ -256,9 +256,6 @@ sender_name = "automation-bot"
 - Fine-grained, Actions Read/write, **이 repo만**으로 권한 최소화.
 - 노출 시: GitHub → Settings → Tokens → **Revoke** 후 재발급 → cron-job.org 헤더 업데이트.
 
-### cron-job.org
-- 강력한 비밀번호 + (가능하면) 2FA 사용.
-
 ---
 
 ## 📜 License
